@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using ProfilesManager.Domain.Entities;
 using ProfilesManager.Domain.IDapperImplementation;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data;
@@ -20,7 +21,8 @@ namespace ProfilesManager.Persistence.DapperImplementation
             typeof(decimal),
             typeof(DateTime),
             typeof(bool),
-            typeof(Guid)
+            typeof(Guid),
+            typeof(DoctorStatus)
         };
 
         public TablesManager(string connectionString)
@@ -114,10 +116,10 @@ namespace ProfilesManager.Persistence.DapperImplementation
                 {
                     if (navPropsTypes is not null)
                     {
-                        if (navPropsTypes.FirstOrDefault(f => f.Name == p.Name.Substring(0, p.Name.Length - 2)) != null)
+                        if (navPropsTypes.FirstOrDefault(f => f.Name.Contains(p.Name.Substring(0, p.Name.Length - 2))) != null)
                         {
-                            value = $"FOREIGN KEY {GetModelType(p.PropertyType.Name)} REFERENCES " +
-                                $"{GetTableName(navPropsTypes.FirstOrDefault(f => f.Name == p.Name.Substring(0, p.Name.Length - 2)))} " +
+                            value = $"{GetModelType(p.PropertyType.Name)} REFERENCES " +
+                                $"{GetTableName(navPropsTypes.FirstOrDefault(f => f.Name.Contains(p.Name.Substring(0, p.Name.Length - 2))))} " +
                                 $"(Id) ON DELETE CASCADE";
                         }
                         else
@@ -164,7 +166,7 @@ namespace ProfilesManager.Persistence.DapperImplementation
                     return "MONEY";
                 case "Guid":
                     return "UNIQUEIDENTIFIER";
-                case "ProcedureCategory":
+                case "DoctorStatus":
                     return "INT";
                 default:
                     throw new Exception("This data type is not processed");

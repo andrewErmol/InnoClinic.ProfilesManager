@@ -50,6 +50,7 @@ namespace ProfilesManager.Service.Services
         public async Task UpdateReceptionist(Guid id, Receptionist receptionist)
         {
             var receptionistEntity = await _repositoryManager.ReceptionistsRepository.GetById(id);
+            receptionist.Id = id;
 
             if (receptionistEntity == null)
             {

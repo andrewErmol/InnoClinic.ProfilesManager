@@ -18,10 +18,10 @@ namespace ProfilesManager.Service.Services
         {
             Dictionary<Type, Type[]> modelAndNavPropsTypes = new Dictionary<Type, Type[]>
             {
-                { typeof(DoctorEntity), new Type[] { typeof(SpecializationEntity) } },
                 { typeof(PatientEntity), null },
                 { typeof(ReceptionistEntity), null },
-                { typeof(SpecializationEntity), null }
+                { typeof(SpecializationEntity), null },
+                { typeof(DoctorEntity), new Type[] { typeof(SpecializationEntity) } }
             };
 
             _tablesManager.CreateTable(modelAndNavPropsTypes);

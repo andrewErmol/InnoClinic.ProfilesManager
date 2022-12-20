@@ -50,6 +50,7 @@ namespace ProfilesManager.Service.Services
         public async Task UpdatePatient(Guid id, Patient patient)
         {
             var patientEntity = await _repositoryManager.PatientsRepository.GetById(id);
+            patient.Id = id;
 
             if (patientEntity == null)
             {

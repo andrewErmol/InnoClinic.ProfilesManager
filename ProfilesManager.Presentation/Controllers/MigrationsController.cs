@@ -30,7 +30,7 @@ namespace ProfilesManager.Presentation.Controllers
             return NoContent();
         }
 
-        [HttpDelete("{data}")]
+        [HttpDelete("data")]
         public IActionResult ClearTables()
         {
             _migrationsService.ClearTables();

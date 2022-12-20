@@ -55,7 +55,7 @@ namespace ProfilesManager.Presentation.Controllers
             return Ok(doctor);
         }
 
-        [HttpGet("admin/doctors/{office}")]
+        [HttpGet("admin/doctors/{officeId}")]
         public async Task<IActionResult> DoctorByOffice(Guid officeId)
         {
             var doctor = await _serviceManager.DoctorsService.GetDoctorByOffice(officeId);
@@ -63,7 +63,7 @@ namespace ProfilesManager.Presentation.Controllers
             return Ok(doctor);
         }
 
-        [HttpGet("admin/doctors/{specialization}")]
+        [HttpGet("admin/doctors/{specializationName}")]
         public async Task<IActionResult> DoctorBySpecialization(string specializationName)
         {
             var doctor = await _serviceManager.DoctorsService.GetDoctorBySpecialization(specializationName);
@@ -82,9 +82,11 @@ namespace ProfilesManager.Presentation.Controllers
         }
 
         [HttpPut("doctors/{id}")]
-        public async Task<IActionResult> UpdateDoctor(Guid id, [FromBody] int doctorStatus)
+        public async Task<IActionResult> UpdateDoctor(Guid id, [FromBody] DoctorForRequest doctorForRequest)
         {
-            await _serviceManager.DoctorsService.UpdateDoctorStatus(id, doctorStatus);
+            var doctor = _mapper.Map<Doctor>(doctorForRequest);
+
+            await _serviceManager.DoctorsService.UpdateDoctor(id, doctor);
 
             return NoContent();
         }

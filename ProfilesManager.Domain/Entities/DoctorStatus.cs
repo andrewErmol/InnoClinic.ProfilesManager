@@ -2,5 +2,8 @@
 {
     public enum DoctorStatus
     {
+        hair,
+        jhgfd,
+        uhgt
     }
 }

@@ -33,30 +33,10 @@ namespace ProfilesManager.Persistence.DapperImplementation
             return doctors;
         }
 
-        public async Task<IEnumerable<DoctorEntity>> GetAllForPatient()
-        {
-            var query = $"SELECT Id, FirstName, LastName, MiddleName," +
-                    $" Status, Specializations.Name, OfficeId, CareerStartYear FROM {GetTableName(_entityType)} " +
-                $"JOIN Specializations ON Specializations.Id = SpecializationId";
-
-            IEnumerable<DoctorEntity> doctors;
-
-            using (IDbConnection db = new SqlConnection(connectionString))
-            {
-                doctors = await db.QueryAsync<DoctorEntity, SpecializationEntity, DoctorEntity>(query, (doctor, specialization) =>
-                {
-                    doctor.Specialization = specialization;
-                    return doctor;
-                });
-            }
-
-            return doctors;
-        }
-
         public async Task<DoctorEntity> GetById(Guid id)
         {
             var query = $"SELECT * FROM {GetTableName(_entityType)} " +
-                $"JOIN Specializations ON Specializations.Id = SpecializationId" +
+                $"JOIN Specializations ON Specializations.Id = SpecializationId " +
                 $"WHERE Doctors.Id = '{id}'";
 
             IEnumerable<DoctorEntity> doctors;
@@ -76,29 +56,8 @@ namespace ProfilesManager.Persistence.DapperImplementation
         public async Task<DoctorEntity> GetByName(string name)
         {
             var query = $"SELECT * FROM {GetTableName(_entityType)} " +
-                $"JOIN Specializations ON Specializations.Id = SpecializationId" +
+                $"JOIN Specializations ON Specializations.Id = SpecializationId " +
                 $"WHERE Doctors.FirstName = '{name}'";
-
-            IEnumerable<DoctorEntity> doctors;
-
-            using (IDbConnection db = new SqlConnection(connectionString))
-            {
-                doctors = await db.QueryAsync<DoctorEntity, SpecializationEntity, DoctorEntity>(query, (doctor, specialization) =>
-                {
-                    doctor.Specialization = specialization;
-                    return doctor;
-                });
-            }
-
-            return doctors.SingleOrDefault();
-        }
-
-        public async Task<DoctorEntity> GetByIdForPatient(Guid id)
-        {
-            var query = $"SELECT Id, FirstName, LastName, MiddleName," +
-                $" Status, Specializations.Name, OfficeId, CareerStartYear FROM {GetTableName(_entityType)} " +
-                $"JOIN Specializations ON Specializations.Id = SpecializationId" +
-                $"WHERE Doctors.Id = '{id}'";
 
             IEnumerable<DoctorEntity> doctors;
 
@@ -117,7 +76,7 @@ namespace ProfilesManager.Persistence.DapperImplementation
         public async Task<DoctorEntity> GetByOffice(Guid officeId)
         {
             var query = $"SELECT * FROM {GetTableName(_entityType)} " +
-                $"JOIN Specializations ON Specializations.Id = SpecializationId" +
+                $"JOIN Specializations ON Specializations.Id = SpecializationId " +
                 $"WHERE Doctors.OfficeId = '{officeId}'";
 
             IEnumerable<DoctorEntity> doctors;
@@ -137,7 +96,7 @@ namespace ProfilesManager.Persistence.DapperImplementation
         public async Task<DoctorEntity> GetBySpecialization(string specializationName)
         {
             var query = $"SELECT * FROM {GetTableName(_entityType)} " +
-                $"JOIN Specializations ON Specializations.Id = SpecializationId" +
+                $"JOIN Specializations ON Specializations.Id = SpecializationId " +
                 $"WHERE Specializations.Name = '{specializationName}'";
 
             IEnumerable<DoctorEntity> doctors;
@@ -168,12 +127,12 @@ namespace ProfilesManager.Persistence.DapperImplementation
                 { "@SpecializationId", doctor.SpecializationId },
                 { "@OfficeId", doctor.OfficeId },
                 { "@CareerStartYear", doctor.CareerStartYear },
-                { "@Address", doctor.Address }
+                { "@Address", doctor.Address },
             };
             
             var parameters = new DynamicParameters(dict);
 
-            string query = $"INSERT INTO {GetTableName(doctor.GetType())} VALUES" +
+            string query = $"INSERT INTO {GetTableName(doctor.GetType())} VALUES " +
                 "(@Id, @FirstName, @LastName, @MiddleName, @DateOfBirth, @Status, @AccountId, @SpecializationId, @OfficeId, @CareerStartYear, @Address)";
 
             await Create(query, parameters);
@@ -213,14 +172,14 @@ namespace ProfilesManager.Persistence.DapperImplementation
         {
             var dict = new Dictionary<string, object>
             {
-                { "@Status", doctorStatus }
+                { "@Status", (int)doctorStatus }
             };
 
             var parameters = new DynamicParameters(dict);
 
             string query = $"UPDATE {GetTableName(_entityType)} " +
                 "SET Status = @Status " +
-                $"WHERE Id = {id}";
+                $"WHERE Id = '{id}'";
 
             await Update(query, parameters);
         }

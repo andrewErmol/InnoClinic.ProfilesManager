@@ -2,7 +2,7 @@
 
 namespace ProfilesManager.Domain.Entities
 {
-    [Table("Dostors")]
+    [Table("Doctors")]
     public class DoctorEntity
     {
         public Guid Id { get; set; }
@@ -15,7 +15,7 @@ namespace ProfilesManager.Domain.Entities
         public Guid SpecializationId { get; set; }
         public Guid OfficeId { get; set; }
         public DateTime CareerStartYear { get; set; }
-        public virtual SpecializationEntity Specialization { get; set; }
         public string Address { get; set; }
+        public virtual SpecializationEntity Specialization { get; set; }
     }
 }

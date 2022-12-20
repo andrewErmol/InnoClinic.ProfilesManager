@@ -63,7 +63,7 @@ namespace ProfilesManager.Persistence.DapperImplementation
             var parameters = new DynamicParameters(dict);
 
             string query = $"UPDATE {GetTableName(_entityType)} " +
-                "SET FirstName = @FirstName, LastName = @LastName, MiddleName = @MiddleName, DateOfBirth = @DateOfBirth, OfficeId = @OfficeId AccountId = @AccountId " +
+                "SET FirstName = @FirstName, LastName = @LastName, MiddleName = @MiddleName, DateOfBirth = @DateOfBirth, OfficeId = @OfficeId, AccountId = @AccountId " +
                 "WHERE Id = @Id";
 
             await Update(query, parameters);

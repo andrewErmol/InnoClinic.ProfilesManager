@@ -9,8 +9,10 @@ namespace ProfilesManager.Service
         public MappingProfileForEntity()
         {
             CreateMap<Doctor, DoctorEntity>();
-            CreateMap<DoctorEntity, Doctor>();
-            CreateMap<DoctorEntity, DoctorForPatient>();
+            CreateMap<DoctorEntity, Doctor>()
+                .ForMember(d => d.SpecializationName, opt => opt.MapFrom(s => s.Specialization.Name));
+            CreateMap<DoctorEntity, DoctorForPatient>()
+                .ForMember(d => d.SpecializationName, opt => opt.MapFrom(s => s.Specialization.Name));
 
             CreateMap<Patient, PatientEntity>();
             CreateMap<PatientEntity, Patient>();

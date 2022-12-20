@@ -9,9 +9,9 @@ namespace ProfilesManager.API
         public MappingProfileForRequest()
         {
             CreateMap<DoctorForRequest, Doctor>();
-            CreateMap<PatientForRequest, Doctor>();
-            CreateMap<ReceptionistForRequest, Doctor>();
-            CreateMap<SpecializationForRequest, Doctor>();
+            CreateMap<PatientForRequest, Patient>();
+            CreateMap<ReceptionistForRequest, Receptionist>();
+            CreateMap<SpecializationForRequest, Specialization>();
         }
     }
 }

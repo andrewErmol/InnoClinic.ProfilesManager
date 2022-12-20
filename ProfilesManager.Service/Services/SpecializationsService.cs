@@ -50,13 +50,13 @@ namespace ProfilesManager.Service.Services
         public async Task UpdateSpecialization(Guid id, Specialization specialization)
         {
             var specializationEntity = await _repositoryManager.SpecializationsRepository.GetById(id);
-
+            specialization.Id = id;
             if (specializationEntity == null)
             {
                 throw new NotFoundException("Specialization with entered Id does not exsist");
             }
 
-            _mapper.Map(specialization, specialization);
+            _mapper.Map(specialization, specializationEntity);
 
             await _repositoryManager.SpecializationsRepository.Update(specializationEntity);
         }

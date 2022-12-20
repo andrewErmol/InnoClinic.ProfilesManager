@@ -27,7 +27,7 @@ namespace ProfilesManager.Service.Services
 
         public async Task<IEnumerable<DoctorForPatient>> GetDoctorsForPatient()
         {
-            var doctorEntity = await _repositoryManager.DoctorsRepository.GetAllForPatient();
+            var doctorEntity = await _repositoryManager.DoctorsRepository.GetAll();
 
             return _mapper.Map<IEnumerable<DoctorForPatient>>(doctorEntity);
         }
@@ -58,7 +58,7 @@ namespace ProfilesManager.Service.Services
 
         public async Task<DoctorForPatient> GetDoctorByIdForPatient(Guid id)
         {
-            var doctor = await _repositoryManager.DoctorsRepository.GetByIdForPatient(id);
+            var doctor = await _repositoryManager.DoctorsRepository.GetById(id);
 
             if (doctor == null)
             {
@@ -105,6 +105,7 @@ namespace ProfilesManager.Service.Services
         public async Task UpdateDoctor(Guid id, Doctor doctor)
         {
             var doctorEntity = await _repositoryManager.DoctorsRepository.GetById(id);
+            doctor.Id = id;
 
             if (doctorEntity == null)
             {
