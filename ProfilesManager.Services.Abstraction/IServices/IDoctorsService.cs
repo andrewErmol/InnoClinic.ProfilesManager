@@ -7,10 +7,10 @@ namespace ProfilesManager.Services.Abstraction.IServices
         Task<IEnumerable<Doctor>> GetDoctors();
         Task<IEnumerable<DoctorForPatient>> GetDoctorsForPatient();
         Task<Doctor> GetDoctorById(Guid id);
-        Task<Doctor> GetDoctorByName(string name);
+        Task<IEnumerable<Doctor>> GetDoctorByName(string name);
         Task<DoctorForPatient> GetDoctorByIdForPatient(Guid id);
-        Task<Doctor> GetDoctorByOffice(Guid officeId);
-        Task<Doctor> GetDoctorBySpecialization(string specializationName);
+        Task<IEnumerable<Doctor>> GetDoctorByOffice(Guid officeId);
+        Task<IEnumerable<Doctor>> GetDoctorBySpecialization(string specializationName);
         Task<Doctor> CreateDoctor(Doctor doctor);
         Task DeleteDoctor(Guid id);
         Task UpdateDoctor(Guid id, Doctor doctor);

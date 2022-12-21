@@ -44,7 +44,7 @@ namespace ProfilesManager.Service.Services
             return _mapper.Map<Doctor>(doctor);
         }
 
-        public async Task<Doctor> GetDoctorByName(string name)
+        public async Task<IEnumerable<Doctor>> GetDoctorByName(string name)
         {
             var doctor = await _repositoryManager.DoctorsRepository.GetByName(name);
 
@@ -53,7 +53,7 @@ namespace ProfilesManager.Service.Services
                 throw new NotFoundException("Doctor with entered Id does not exsist");
             }
 
-            return _mapper.Map<Doctor>(doctor);
+            return _mapper.Map<IEnumerable<Doctor>>(doctor);
         }
 
         public async Task<DoctorForPatient> GetDoctorByIdForPatient(Guid id)
@@ -68,7 +68,7 @@ namespace ProfilesManager.Service.Services
             return _mapper.Map<DoctorForPatient>(doctor);
         }
 
-        public async Task<Doctor> GetDoctorByOffice(Guid officeId)
+        public async Task<IEnumerable<Doctor>> GetDoctorByOffice(Guid officeId)
         {
             var doctor = await _repositoryManager.DoctorsRepository.GetByOffice(officeId);
 
@@ -77,10 +77,10 @@ namespace ProfilesManager.Service.Services
                 throw new NotFoundException("Doctor with entered Id does not exsist");
             }
 
-            return _mapper.Map<Doctor>(doctor);
+            return _mapper.Map<IEnumerable<Doctor>>(doctor);
         }
 
-        public async Task<Doctor> GetDoctorBySpecialization(string specializationName)
+        public async Task<IEnumerable<Doctor>> GetDoctorBySpecialization(string specializationName)
         {
             var doctor = await _repositoryManager.DoctorsRepository.GetBySpecialization(specializationName);
 
@@ -89,7 +89,7 @@ namespace ProfilesManager.Service.Services
                 throw new NotFoundException("Doctor with entered Id does not exsist");
             }
 
-            return _mapper.Map<Doctor>(doctor);
+            return _mapper.Map<IEnumerable<Doctor>>(doctor);
         }
 
         public async Task<Doctor> CreateDoctor(Doctor doctor)

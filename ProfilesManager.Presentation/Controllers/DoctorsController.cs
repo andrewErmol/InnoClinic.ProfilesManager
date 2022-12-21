@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using ProfilesManager.Contracts;
 using ProfilesManager.Contracts.Models;
 using ProfilesManager.Contracts.RequestEntity;
 using ProfilesManager.Services.Abstraction.IServices;
@@ -39,10 +40,10 @@ namespace ProfilesManager.Presentation.Controllers
             return Ok(doctor);
         }
 
-        [HttpGet("admin/doctors/{name}")]
-        public async Task<IActionResult> DoctorByName(string name)
+        [HttpGet("admin/doctors/name")]
+        public async Task<IActionResult> DoctorByName([FromQuery] DoctorNameToFilter name)
         {
-            var doctor = await _serviceManager.DoctorsService.GetDoctorByName(name);
+            var doctor = await _serviceManager.DoctorsService.GetDoctorByName(name.DoctorName);
 
             return Ok(doctor);
         }
@@ -55,18 +56,18 @@ namespace ProfilesManager.Presentation.Controllers
             return Ok(doctor);
         }
 
-        [HttpGet("admin/doctors/{officeId}")]
-        public async Task<IActionResult> DoctorByOffice(Guid officeId)
+        [HttpGet("admin/doctors/office")]
+        public async Task<IActionResult> DoctorByOffice([FromQuery] OfficeIdToFilter office)
         {
-            var doctor = await _serviceManager.DoctorsService.GetDoctorByOffice(officeId);
+            var doctor = await _serviceManager.DoctorsService.GetDoctorByOffice(Guid.Parse(office.OfficeId));
 
             return Ok(doctor);
         }
 
-        [HttpGet("admin/doctors/{specializationName}")]
-        public async Task<IActionResult> DoctorBySpecialization(string specializationName)
+        [HttpGet("admin/doctors/specialization")]
+        public async Task<IActionResult> DoctorBySpecialization([FromQuery] DoctorSpecializationToFilter specialization)
         {
-            var doctor = await _serviceManager.DoctorsService.GetDoctorBySpecialization(specializationName);
+            var doctor = await _serviceManager.DoctorsService.GetDoctorBySpecialization(specialization.SpecializationName);
 
             return Ok(doctor);
         }

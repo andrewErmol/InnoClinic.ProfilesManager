@@ -53,7 +53,7 @@ namespace ProfilesManager.Persistence.DapperImplementation
             return doctors.SingleOrDefault();
         }
 
-        public async Task<DoctorEntity> GetByName(string name)
+        public async Task<IEnumerable<DoctorEntity>> GetByName(string name)
         {
             var query = $"SELECT * FROM {GetTableName(_entityType)} " +
                 $"JOIN Specializations ON Specializations.Id = SpecializationId " +
@@ -70,10 +70,10 @@ namespace ProfilesManager.Persistence.DapperImplementation
                 });
             }
 
-            return doctors.SingleOrDefault();
+            return doctors;
         }
 
-        public async Task<DoctorEntity> GetByOffice(Guid officeId)
+        public async Task<IEnumerable<DoctorEntity>> GetByOffice(Guid officeId)
         {
             var query = $"SELECT * FROM {GetTableName(_entityType)} " +
                 $"JOIN Specializations ON Specializations.Id = SpecializationId " +
@@ -90,10 +90,10 @@ namespace ProfilesManager.Persistence.DapperImplementation
                 });
             }
 
-            return doctors.SingleOrDefault();
+            return doctors;
         }
 
-        public async Task<DoctorEntity> GetBySpecialization(string specializationName)
+        public async Task<IEnumerable<DoctorEntity>> GetBySpecialization(string specializationName)
         {
             var query = $"SELECT * FROM {GetTableName(_entityType)} " +
                 $"JOIN Specializations ON Specializations.Id = SpecializationId " +
@@ -110,7 +110,7 @@ namespace ProfilesManager.Persistence.DapperImplementation
                 });
             }
 
-            return doctors.SingleOrDefault();
+            return doctors;
         }
 
         public async Task Create(DoctorEntity doctor)
@@ -132,7 +132,7 @@ namespace ProfilesManager.Persistence.DapperImplementation
             
             var parameters = new DynamicParameters(dict);
 
-            string query = $"INSERT INTO {GetTableName(doctor.GetType())} VALUES " +
+            string query = $"INSERT INTO {GetTableName(doctor.GetType())} VALUES" +
                 "(@Id, @FirstName, @LastName, @MiddleName, @DateOfBirth, @Status, @AccountId, @SpecializationId, @OfficeId, @CareerStartYear, @Address)";
 
             await Create(query, parameters);

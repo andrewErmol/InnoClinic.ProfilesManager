@@ -6,9 +6,9 @@ namespace ProfilesManager.Domain.IRepositories
     {
         Task<IEnumerable<DoctorEntity>> GetAll();
         Task<DoctorEntity> GetById(Guid id);
-        Task<DoctorEntity> GetByName(string name);
-        Task<DoctorEntity> GetByOffice(Guid officeId);
-        Task<DoctorEntity> GetBySpecialization(string specializationName);
+        Task<IEnumerable<DoctorEntity>> GetByName(string name);
+        Task<IEnumerable<DoctorEntity>> GetByOffice(Guid officeId);
+        Task<IEnumerable<DoctorEntity>> GetBySpecialization(string specializationName);
         Task Create(DoctorEntity doctor);
         Task Delete(Guid id);
         Task Update(DoctorEntity doctor);
