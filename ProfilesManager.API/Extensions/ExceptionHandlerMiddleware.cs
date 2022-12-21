@@ -26,6 +26,10 @@ namespace ProfilesManager.API.Extensions
             {
                 await HandleExceptionAsync(httpContext, ex, HttpStatusCode.NotFound, () => Log.Information(ex, ex.Message));
             }
+            catch (BadRequestException ex)
+            {
+                await HandleExceptionAsync(httpContext, ex, HttpStatusCode.BadRequest, () => Log.Information(ex, ex.Message));
+            }
             catch (Exception ex)
             {
                 await HandleExceptionAsync(httpContext, ex, HttpStatusCode.InternalServerError, () => Log.Error(ex, ex.Message));

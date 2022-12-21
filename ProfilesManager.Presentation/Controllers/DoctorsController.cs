@@ -92,10 +92,10 @@ namespace ProfilesManager.Presentation.Controllers
             return NoContent();
         }
 
-        [HttpPatch("doctors/{id}")]
-        public async Task<IActionResult> UpdateDoctorStatus(Guid id, [FromBody] int doctorStatus)
+        [HttpPatch("doctors/status")]
+        public async Task<IActionResult> UpdateDoctorStatus(Guid id, [FromQuery] string status)
         {
-            await _serviceManager.DoctorsService.UpdateDoctorStatus(id, doctorStatus);
+            await _serviceManager.DoctorsService.UpdateDoctorStatus(id, status);
 
             return NoContent();
         }

@@ -168,7 +168,7 @@ namespace ProfilesManager.Persistence.DapperImplementation
             await Update(query, parameters);
         }
 
-        public async Task UpdateDoctorStatus(Guid id, int doctorStatus)
+        public async Task UpdateDoctorStatus(Guid id, DoctorStatus doctorStatus)
         {
             var dict = new Dictionary<string, object>
             {

@@ -12,6 +12,6 @@ namespace ProfilesManager.Domain.IRepositories
         Task Create(DoctorEntity doctor);
         Task Delete(Guid id);
         Task Update(DoctorEntity doctor);
-        Task UpdateDoctorStatus(Guid id, int doctorStatus);
+        Task UpdateDoctorStatus(Guid id, DoctorStatus doctorStatus);
     }
 }

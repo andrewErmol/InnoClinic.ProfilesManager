@@ -15,6 +15,7 @@ namespace ProfilesManager.Presentation.Validators
             RuleFor(doctor => doctor.SpecializationId).NotNull().NotEmpty();
             RuleFor(doctor => doctor.OfficeId).NotNull().NotEmpty();
             RuleFor(doctor => doctor.CareerStartYear).NotNull().NotEmpty().GreaterThan(doctor => doctor.DateOfBirth.AddYears(18));
+            RuleFor(doctor => doctor.Status).NotNull().NotEmpty();
         }        
     }
 }

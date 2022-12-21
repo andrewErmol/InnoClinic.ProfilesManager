@@ -21,7 +21,7 @@ namespace ProfilesManager.Persistence.DapperImplementation
                 $"SELECT * FROM {GetTableName(_entityType)} WHERE Id = '{id}'"
                 );
 
-            return specializationEntity.SingleOrDefault();
+            return specializationEntity.FirstOrDefault();
         }
 
         public async Task Create(SpecializationEntity specialization)

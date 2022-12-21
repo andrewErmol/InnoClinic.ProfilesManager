@@ -14,6 +14,6 @@ namespace ProfilesManager.Services.Abstraction.IServices
         Task<Doctor> CreateDoctor(Doctor doctor);
         Task DeleteDoctor(Guid id);
         Task UpdateDoctor(Guid id, Doctor doctor);
-        Task UpdateDoctorStatus(Guid id, int doctorStatus);
+        Task UpdateDoctorStatus(Guid id, string doctorStatus);
     }
 }

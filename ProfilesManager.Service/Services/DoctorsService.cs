@@ -94,6 +94,18 @@ namespace ProfilesManager.Service.Services
 
         public async Task<Doctor> CreateDoctor(Doctor doctor)
         {
+            DoctorStatus status;
+            if (!Enum.TryParse(doctor.Status, out status))
+            {
+                throw new BadRequestException("Entered status dos not exist");
+            }
+
+            var specialization = await _repositoryManager.SpecializationsRepository.GetById(doctor.SpecializationId);
+            if (specialization == null)
+            {
+                throw new BadRequestException("Entered specialization does not exist");
+            }
+
             var doctorEntity = _mapper.Map<DoctorEntity>(doctor);
             doctorEntity.Id = Guid.NewGuid();
 
@@ -112,12 +124,24 @@ namespace ProfilesManager.Service.Services
                 throw new NotFoundException("Doctor with entered Id does not exsist");
             }
 
+            var specialization = await _repositoryManager.SpecializationsRepository.GetById(doctor.SpecializationId);
+            if (specialization == null)
+            {
+                throw new BadRequestException("Entered specialization does not exist");
+            }
+
+            DoctorStatus status;
+            if (!Enum.TryParse(doctor.Status, out status))
+            {
+                throw new BadRequestException("Entered status does not exist");
+            }
+
             _mapper.Map(doctor, doctorEntity);
 
             await _repositoryManager.DoctorsRepository.Update(doctorEntity);
         }
 
-        public async Task UpdateDoctorStatus(Guid id, int doctorStatus)
+        public async Task UpdateDoctorStatus(Guid id, string doctorStatus)
         {
             var doctorEntity = await _repositoryManager.DoctorsRepository.GetById(id);
 
@@ -126,7 +150,13 @@ namespace ProfilesManager.Service.Services
                 throw new NotFoundException("Doctor with entered Id does not exsist");
             }
 
-            await _repositoryManager.DoctorsRepository.UpdateDoctorStatus(id, doctorStatus);
+            DoctorStatus status;
+            if (!Enum.TryParse(doctorStatus, out status))
+            {
+                throw new BadRequestException("Entered status dos not exist");
+            }
+
+            await _repositoryManager.DoctorsRepository.UpdateDoctorStatus(id, status);
         }
 
         public async Task DeleteDoctor(Guid id)

@@ -8,7 +8,7 @@ namespace ProfilesManager.Contracts.RequestEntity
         public string LastName { get; set; }
         public string MiddleName { get; set; }
         public DateTime DateOfBirth { get; set; }
-        public DoctorStatus Status { get; set; }
+        public string Status { get; set; }
         public Guid AccountId { get; set; }
         public Guid SpecializationId { get; set; }
         public Guid OfficeId { get; set; }

@@ -2,8 +2,8 @@
 {
     public enum DoctorStatus
     {
-        hair,
-        jhgfd,
-        uhgt
+        Active,
+        Dismissed,
+        Vacation
     }
 }
