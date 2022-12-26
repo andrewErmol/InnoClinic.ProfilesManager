@@ -46,7 +46,7 @@ namespace ProfilesManager.Presentation.Controllers
             }
         }
 
-        [HttpPost("doctors")]
+        [HttpPost]
         public async Task<IActionResult> CreateDoctor([FromBody] DoctorForRequest doctorForRequest)
         {
             var doctor = _mapper.Map<Doctor>(doctorForRequest);
@@ -56,7 +56,7 @@ namespace ProfilesManager.Presentation.Controllers
             return CreatedAtAction(nameof(Doctors), new { id = createdDoctorId });
         }
 
-        [HttpPut("doctors/{id}")]
+        [HttpPut("{id}")]
         public async Task<IActionResult> UpdateDoctor(Guid id, [FromBody] DoctorForRequest doctorForRequest)
         {
             var doctor = _mapper.Map<Doctor>(doctorForRequest);
@@ -66,7 +66,7 @@ namespace ProfilesManager.Presentation.Controllers
             return NoContent();
         }
 
-        [HttpPatch("doctors/{id}")]
+        [HttpPatch("{id}")]
         public async Task<IActionResult> UpdateDoctorStatus(Guid id, [FromQuery] string status)
         {
             await _serviceManager.DoctorsService.UpdateDoctorStatus(id, status);
@@ -74,7 +74,7 @@ namespace ProfilesManager.Presentation.Controllers
             return NoContent();
         }
 
-        [HttpDelete("doctors/{id}")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteDoctor(Guid id)
         {
             await _serviceManager.DoctorsService.DeleteDoctor(id);
