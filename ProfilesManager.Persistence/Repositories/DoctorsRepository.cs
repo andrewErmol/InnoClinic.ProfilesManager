@@ -29,17 +29,9 @@ namespace ProfilesManager.Persistence.DapperImplementation
             {
                 query += $" AND Doctors.OfficeId = '{Guid.Parse(parameters.OfficeId)}'";
             }
-            if (parameters.FirstName != null)
+            if (parameters.OfficeAddress != null)
             {
-                query += $" AND Doctors.FirstName = '{parameters.FirstName}'";
-            }
-            if (parameters.LastName != null)
-            {
-                query += $" AND Doctors.LastName = '{parameters.LastName}'";
-            }
-            if (parameters.MiddleName != null)
-            {
-                query += $" AND Doctors.MiddleName = '{parameters.MiddleName}'";
+                query += $" AND Doctors.Address = '{parameters.OfficeAddress}'";
             }
 
             IEnumerable<DoctorEntity> doctors;
@@ -51,6 +43,20 @@ namespace ProfilesManager.Persistence.DapperImplementation
                     doctor.Specialization = specialization;
                     return doctor;
                 });
+            }
+
+
+            if (!string.IsNullOrWhiteSpace(parameters.FirstName))
+            {
+                doctors = doctors.Where(d => d.FirstName.ToLower().Contains(parameters.FirstName.Trim().ToLower()));
+            }
+            if (!string.IsNullOrWhiteSpace(parameters.LastName))
+            {
+                doctors = doctors.Where(d => d.LastName.ToLower().Contains(parameters.LastName.Trim().ToLower()));
+            }
+            if (!string.IsNullOrWhiteSpace(parameters.MiddleName))
+            {
+                doctors = doctors.Where(d => d.MiddleName.ToLower().Contains(parameters.MiddleName.Trim().ToLower()));
             }
 
             return doctors;
