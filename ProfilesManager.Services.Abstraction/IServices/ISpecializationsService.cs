@@ -6,7 +6,7 @@ namespace ProfilesManager.Services.Abstraction.IServices
     {
         Task<IEnumerable<Specialization>> GetSpecializations();
         Task<Specialization> GetSpecializationById(Guid id);
-        Task<Specialization> CreateSpecialization(Specialization specialization);
+        Task<Guid> CreateSpecialization(Specialization specialization);
         Task DeleteSpecialization(Guid id);
         Task UpdateSpecialization(Guid id, Specialization specialization);
     }

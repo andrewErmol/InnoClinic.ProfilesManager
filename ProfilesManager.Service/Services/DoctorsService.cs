@@ -3,6 +3,7 @@ using ProfilesManager.Contracts.Models;
 using ProfilesManager.Domain.Entities;
 using ProfilesManager.Domain.IRepositories;
 using ProfilesManager.Domain.MyExceptions;
+using ProfilesManager.Domain.Parametrs;
 using ProfilesManager.Services.Abstraction.IServices;
 
 namespace ProfilesManager.Service.Services
@@ -18,16 +19,16 @@ namespace ProfilesManager.Service.Services
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<Doctor>> GetDoctors()
+        public async Task<IEnumerable<Doctor>> GetDoctors(ParametersForGetDoctors parameters)
         {
-            var doctorEntity = await _repositoryManager.DoctorsRepository.GetAll();
+            var doctorEntity = await _repositoryManager.DoctorsRepository.GetDoctors(parameters);
 
             return _mapper.Map<IEnumerable<Doctor>>(doctorEntity);
         }
 
-        public async Task<IEnumerable<DoctorForPatient>> GetDoctorsForPatient()
+        public async Task<IEnumerable<DoctorForPatient>> GetDoctorsForPatient(ParametersForGetDoctors parameters)
         {
-            var doctorEntity = await _repositoryManager.DoctorsRepository.GetAll();
+            var doctorEntity = await _repositoryManager.DoctorsRepository.GetDoctors(parameters);
 
             return _mapper.Map<IEnumerable<DoctorForPatient>>(doctorEntity);
         }
@@ -44,18 +45,6 @@ namespace ProfilesManager.Service.Services
             return _mapper.Map<Doctor>(doctor);
         }
 
-        public async Task<IEnumerable<Doctor>> GetDoctorByName(string name)
-        {
-            var doctor = await _repositoryManager.DoctorsRepository.GetByName(name);
-
-            if (doctor == null)
-            {
-                throw new NotFoundException("Doctor with entered Id does not exsist");
-            }
-
-            return _mapper.Map<IEnumerable<Doctor>>(doctor);
-        }
-
         public async Task<DoctorForPatient> GetDoctorByIdForPatient(Guid id)
         {
             var doctor = await _repositoryManager.DoctorsRepository.GetById(id);
@@ -68,31 +57,7 @@ namespace ProfilesManager.Service.Services
             return _mapper.Map<DoctorForPatient>(doctor);
         }
 
-        public async Task<IEnumerable<Doctor>> GetDoctorByOffice(Guid officeId)
-        {
-            var doctor = await _repositoryManager.DoctorsRepository.GetByOffice(officeId);
-
-            if (doctor == null)
-            {
-                throw new NotFoundException("Doctor with entered Id does not exsist");
-            }
-
-            return _mapper.Map<IEnumerable<Doctor>>(doctor);
-        }
-
-        public async Task<IEnumerable<Doctor>> GetDoctorBySpecialization(string specializationName)
-        {
-            var doctor = await _repositoryManager.DoctorsRepository.GetBySpecialization(specializationName);
-
-            if (doctor == null)
-            {
-                throw new NotFoundException("Doctor with entered Id does not exsist");
-            }
-
-            return _mapper.Map<IEnumerable<Doctor>>(doctor);
-        }
-
-        public async Task<Doctor> CreateDoctor(Doctor doctor)
+        public async Task<Guid> CreateDoctor(Doctor doctor)
         {
             DoctorStatus status;
             if (!Enum.TryParse(doctor.Status, out status))
@@ -111,7 +76,7 @@ namespace ProfilesManager.Service.Services
 
             _repositoryManager.DoctorsRepository.Create(doctorEntity);
 
-            return _mapper.Map<Doctor>(doctorEntity);
+            return doctorEntity.Id;
         }
 
         public async Task UpdateDoctor(Guid id, Doctor doctor)

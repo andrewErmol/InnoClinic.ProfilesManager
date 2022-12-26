@@ -1,9 +1,9 @@
 ﻿using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.OpenApi.Models;
-using ProfilesManager.Domain.IDapperImplementation;
 using ProfilesManager.Domain.IRepositories;
 using ProfilesManager.Persistence.DapperImplementation;
+using ProfilesManager.Persistence.IDapperImplementation;
 using ProfilesManager.Presentation.Validators;
 using ProfilesManager.Service.Services;
 using ProfilesManager.Services.Abstraction.IServices;

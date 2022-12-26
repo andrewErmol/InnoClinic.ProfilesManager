@@ -6,7 +6,7 @@ namespace ProfilesManager.Services.Abstraction.IServices
     {
         Task<IEnumerable<Patient>> GetPatients();
         Task<Patient> GetPatientById(Guid id);
-        Task<Patient> CreatePatient(Patient patient);
+        Task<Guid> CreatePatient(Patient patient);
         Task DeletePatient(Guid id);
         Task UpdatePatient(Guid id, Patient patient);
     }

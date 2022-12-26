@@ -1,6 +1,6 @@
 ﻿using ProfilesManager.Domain.Entities;
 
-namespace ProfilesManager.Contracts.RequestEntity
+namespace ProfilesManager.Presentation.RequestEntity
 {
     public class DoctorForRequest
     {

@@ -37,14 +37,14 @@ namespace ProfilesManager.Service.Services
             return _mapper.Map<Receptionist>(receptionist);
         }
 
-        public async Task<Receptionist> CreateReceptionist(Receptionist receptionist)
+        public async Task<Guid> CreateReceptionist(Receptionist receptionist)
         {
             var receptionistEntity = _mapper.Map<ReceptionistEntity>(receptionist);
             receptionistEntity.Id = Guid.NewGuid();
 
             _repositoryManager.ReceptionistsRepository.Create(receptionistEntity);
 
-            return _mapper.Map<Receptionist>(receptionistEntity);
+            return receptionistEntity.Id;
         }
 
         public async Task UpdateReceptionist(Guid id, Receptionist receptionist)

@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using ProfilesManager.Contracts.RequestEntity;
+using ProfilesManager.Presentation.RequestEntity;
 
 namespace ProfilesManager.Presentation.Validators
 {

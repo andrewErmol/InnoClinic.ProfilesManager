@@ -1,6 +1,5 @@
-﻿using ProfilesManager.Contracts.Models;
-using ProfilesManager.Domain.Entities;
-using ProfilesManager.Domain.IDapperImplementation;
+﻿using ProfilesManager.Domain.Entities;
+using ProfilesManager.Persistence.IDapperImplementation;
 using ProfilesManager.Services.Abstraction.IServices;
 
 namespace ProfilesManager.Service.Services

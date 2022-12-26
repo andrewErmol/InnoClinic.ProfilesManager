@@ -37,14 +37,14 @@ namespace ProfilesManager.Service.Services
             return _mapper.Map<Specialization>(specialization);
         }
 
-        public async Task<Specialization> CreateSpecialization(Specialization specialization)
+        public async Task<Guid> CreateSpecialization(Specialization specialization)
         {
             var specializationEntity = _mapper.Map<SpecializationEntity>(specialization);
             specializationEntity.Id = Guid.NewGuid();
 
             _repositoryManager.SpecializationsRepository.Create(specializationEntity);
 
-            return _mapper.Map<Specialization>(specializationEntity);
+            return specializationEntity.Id;
         }
 
         public async Task UpdateSpecialization(Guid id, Specialization specialization)

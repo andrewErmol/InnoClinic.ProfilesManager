@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using ProfilesManager.Domain.Entities;
 using ProfilesManager.Domain.IRepositories;
+using ProfilesManager.Domain.Parametrs;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -14,10 +15,32 @@ namespace ProfilesManager.Persistence.DapperImplementation
         {
         }
 
-        public async Task<IEnumerable<DoctorEntity>> GetAll()
-        {
+        public async Task<IEnumerable<DoctorEntity>> GetDoctors(ParametersForGetDoctors parameters)
+        {          
             var query = $"SELECT * FROM {GetTableName(_entityType)} " +
-                $"JOIN Specializations ON Specializations.Id = SpecializationId";
+                $"JOIN Specializations ON Specializations.Id = SpecializationId " +
+                $"WHERE 1 = 1";
+
+            if (parameters.Specialization != null)
+            {
+                query += $" AND Specializations.Name = '{parameters.Specialization}'";
+            }
+            if (parameters.OfficeId != null)
+            {
+                query += $" AND Doctors.OfficeId = '{Guid.Parse(parameters.OfficeId)}'";
+            }
+            if (parameters.FirstName != null)
+            {
+                query += $" AND Doctors.FirstName = '{parameters.FirstName}'";
+            }
+            if (parameters.LastName != null)
+            {
+                query += $" AND Doctors.LastName = '{parameters.LastName}'";
+            }
+            if (parameters.MiddleName != null)
+            {
+                query += $" AND Doctors.MiddleName = '{parameters.MiddleName}'";
+            }
 
             IEnumerable<DoctorEntity> doctors;
 
@@ -51,67 +74,7 @@ namespace ProfilesManager.Persistence.DapperImplementation
             }
 
             return doctors.SingleOrDefault();
-        }
-
-        public async Task<IEnumerable<DoctorEntity>> GetByName(string name)
-        {
-            var query = $"SELECT * FROM {GetTableName(_entityType)} " +
-                $"JOIN Specializations ON Specializations.Id = SpecializationId " +
-                $"WHERE Doctors.FirstName = '{name}'";
-
-            IEnumerable<DoctorEntity> doctors;
-
-            using (IDbConnection db = new SqlConnection(connectionString))
-            {
-                doctors = await db.QueryAsync<DoctorEntity, SpecializationEntity, DoctorEntity>(query, (doctor, specialization) =>
-                {
-                    doctor.Specialization = specialization;
-                    return doctor;
-                });
-            }
-
-            return doctors;
-        }
-
-        public async Task<IEnumerable<DoctorEntity>> GetByOffice(Guid officeId)
-        {
-            var query = $"SELECT * FROM {GetTableName(_entityType)} " +
-                $"JOIN Specializations ON Specializations.Id = SpecializationId " +
-                $"WHERE Doctors.OfficeId = '{officeId}'";
-
-            IEnumerable<DoctorEntity> doctors;
-
-            using (IDbConnection db = new SqlConnection(connectionString))
-            {
-                doctors = await db.QueryAsync<DoctorEntity, SpecializationEntity, DoctorEntity>(query, (doctor, specialization) =>
-                {
-                    doctor.Specialization = specialization;
-                    return doctor;
-                });
-            }
-
-            return doctors;
-        }
-
-        public async Task<IEnumerable<DoctorEntity>> GetBySpecialization(string specializationName)
-        {
-            var query = $"SELECT * FROM {GetTableName(_entityType)} " +
-                $"JOIN Specializations ON Specializations.Id = SpecializationId " +
-                $"WHERE Specializations.Name = '{specializationName}'";
-
-            IEnumerable<DoctorEntity> doctors;
-
-            using (IDbConnection db = new SqlConnection(connectionString))
-            {
-                doctors = await db.QueryAsync<DoctorEntity, SpecializationEntity, DoctorEntity>(query, (doctor, specialization) =>
-                {
-                    doctor.Specialization = specialization;
-                    return doctor;
-                });
-            }
-
-            return doctors;
-        }
+        }        
 
         public async Task Create(DoctorEntity doctor)
         {

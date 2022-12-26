@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProfilesManager.Domain.IDapperImplementation
+namespace ProfilesManager.Persistence.IDapperImplementation
 {
     public interface ITablesManager
     {

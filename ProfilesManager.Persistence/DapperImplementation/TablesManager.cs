@@ -1,6 +1,6 @@
 ﻿using Dapper;
 using ProfilesManager.Domain.Entities;
-using ProfilesManager.Domain.IDapperImplementation;
+using ProfilesManager.Persistence.IDapperImplementation;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data;
 using System.Data.SqlClient;

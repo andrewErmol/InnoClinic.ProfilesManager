@@ -1,14 +1,12 @@
 ﻿using ProfilesManager.Domain.Entities;
+using ProfilesManager.Domain.Parametrs;
 
 namespace ProfilesManager.Domain.IRepositories
 {
     public interface IDoctorsRepository
     {
-        Task<IEnumerable<DoctorEntity>> GetAll();
+        Task<IEnumerable<DoctorEntity>> GetDoctors(ParametersForGetDoctors parameters);
         Task<DoctorEntity> GetById(Guid id);
-        Task<IEnumerable<DoctorEntity>> GetByName(string name);
-        Task<IEnumerable<DoctorEntity>> GetByOffice(Guid officeId);
-        Task<IEnumerable<DoctorEntity>> GetBySpecialization(string specializationName);
         Task Create(DoctorEntity doctor);
         Task Delete(Guid id);
         Task Update(DoctorEntity doctor);

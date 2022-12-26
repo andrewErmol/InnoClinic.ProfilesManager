@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using ProfilesManager.Contracts.Models;
-using ProfilesManager.Contracts.RequestEntity;
+using ProfilesManager.Presentation.RequestEntity;
 using ProfilesManager.Services.Abstraction.IServices;
 
 namespace ProfilesManager.Presentation.Controllers
@@ -38,9 +38,9 @@ namespace ProfilesManager.Presentation.Controllers
         {
             var specialization = _mapper.Map<Specialization>(specializationForRequest);
 
-            var specializationToReturn = await _serviceManager.SpecializationsService.CreateSpecialization(specialization);
+            var createdSpecializationId = await _serviceManager.SpecializationsService.CreateSpecialization(specialization);
 
-            return Ok(specializationToReturn.Id);
+            return CreatedAtAction(nameof(Specializations), new { id = createdSpecializationId });
         }
 
         [HttpPut("{id}")]

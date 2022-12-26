@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using ProfilesManager.Contracts.Models;
-using ProfilesManager.Contracts.RequestEntity;
+using ProfilesManager.Presentation.RequestEntity;
 using ProfilesManager.Services.Abstraction.IServices;
 
 namespace ProfilesManager.Presentation.Controllers
@@ -38,9 +38,9 @@ namespace ProfilesManager.Presentation.Controllers
         {
             var receptionist = _mapper.Map<Receptionist>(receptionistForRequest);
 
-            var receptionistToReturn = await _serviceManager.ReceptionistsService.CreateReceptionist(receptionist);
+            var createdReceptionistId = await _serviceManager.ReceptionistsService.CreateReceptionist(receptionist);
 
-            return Ok(receptionistToReturn.Id);
+            return CreatedAtAction(nameof(Receptionists), new { id = createdReceptionistId });
         }
 
         [HttpPut("{id}")]

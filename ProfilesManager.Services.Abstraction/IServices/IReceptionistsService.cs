@@ -6,7 +6,7 @@ namespace ProfilesManager.Services.Abstraction.IServices
     {
         Task<IEnumerable<Receptionist>> GetReceptionists();
         Task<Receptionist> GetReceptionistById(Guid id);
-        Task<Receptionist> CreateReceptionist(Receptionist receptionist);
+        Task<Guid> CreateReceptionist(Receptionist receptionist);
         Task DeleteReceptionist(Guid id);
         Task UpdateReceptionist(Guid id, Receptionist receptionist);
     }

@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using ProfilesManager.Contracts.Models;
-using ProfilesManager.Contracts.RequestEntity;
+using ProfilesManager.Presentation.RequestEntity;
 using ProfilesManager.Services.Abstraction.IServices;
 
 namespace ProfilesManager.Presentation.Controllers
@@ -38,9 +38,9 @@ namespace ProfilesManager.Presentation.Controllers
         {
             var patient = _mapper.Map<Patient>(patientForRequest);
 
-            var patientToReturn = await _serviceManager.PatientsService.CreatePatient(patient);
+            var createdPatientId = await _serviceManager.PatientsService.CreatePatient(patient);
 
-            return Ok(patientToReturn.Id);
+            return CreatedAtAction(nameof(Patients), new { id = createdPatientId });
         }
 
         [HttpPut("{id}")]

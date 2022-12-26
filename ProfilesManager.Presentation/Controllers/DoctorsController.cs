@@ -1,13 +1,13 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using ProfilesManager.Contracts;
 using ProfilesManager.Contracts.Models;
-using ProfilesManager.Contracts.RequestEntity;
+using ProfilesManager.Domain.Parametrs;
+using ProfilesManager.Presentation.RequestEntity;
 using ProfilesManager.Services.Abstraction.IServices;
 
 namespace ProfilesManager.Presentation.Controllers
 {
-    [Route("api/")]
+    [Route("api/doctors")]
     [ApiController]
     public class DoctorsController : ControllerBase
     {
@@ -20,56 +20,30 @@ namespace ProfilesManager.Presentation.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("admin/doctors")]
-        public async Task<IActionResult> Doctors()
+        [HttpGet]
+        public async Task<IActionResult> Doctors([FromQuery] ParametersForGetDoctors parameters)
         {
-            return Ok(await _serviceManager.DoctorsService.GetDoctors()); 
+            if (User.IsInRole("Admin"))
+            {
+                return Ok(await _serviceManager.DoctorsService.GetDoctors(parameters));
+            }            
+
+            return Ok(await _serviceManager.DoctorsService.GetDoctorsForPatient(parameters));
         }
 
-        [HttpGet("patient/doctors")]
-        public async Task<IActionResult> DoctorsForPatient()
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Doctor(Guid id)
         {
-            return Ok(await _serviceManager.DoctorsService.GetDoctorsForPatient());
-        }
-
-        [HttpGet("admin/doctors/{id}")]
-        public async Task<IActionResult> DoctorById(Guid id)
-        {
-            var doctor = await _serviceManager.DoctorsService.GetDoctorById(id);
-
-            return Ok(doctor);
-        }
-
-        [HttpGet("admin/doctors/name")]
-        public async Task<IActionResult> DoctorByName([FromQuery] DoctorNameToFilter name)
-        {
-            var doctor = await _serviceManager.DoctorsService.GetDoctorByName(name.DoctorName);
-
-            return Ok(doctor);
-        }
-
-        [HttpGet("patient/doctors/{id}")]
-        public async Task<IActionResult> DoctorForPatient(Guid id)
-        {
-            var doctor = await _serviceManager.DoctorsService.GetDoctorByIdForPatient(id);
-
-            return Ok(doctor);
-        }
-
-        [HttpGet("admin/doctors/office")]
-        public async Task<IActionResult> DoctorByOffice([FromQuery] OfficeIdToFilter office)
-        {
-            var doctor = await _serviceManager.DoctorsService.GetDoctorByOffice(Guid.Parse(office.OfficeId));
-
-            return Ok(doctor);
-        }
-
-        [HttpGet("admin/doctors/specialization")]
-        public async Task<IActionResult> DoctorBySpecialization([FromQuery] DoctorSpecializationToFilter specialization)
-        {
-            var doctor = await _serviceManager.DoctorsService.GetDoctorBySpecialization(specialization.SpecializationName);
-
-            return Ok(doctor);
+            if (User.IsInRole("Admin"))
+            {
+                var doctor = await _serviceManager.DoctorsService.GetDoctorById(id);
+                return Ok(doctor);
+            }
+            else
+            {
+                var doctor = await _serviceManager.DoctorsService.GetDoctorByIdForPatient(id);
+                return Ok(doctor);
+            }
         }
 
         [HttpPost("doctors")]
@@ -77,9 +51,9 @@ namespace ProfilesManager.Presentation.Controllers
         {
             var doctor = _mapper.Map<Doctor>(doctorForRequest);
 
-            var doctorToReturn = await _serviceManager.DoctorsService.CreateDoctor(doctor);
+            var createdDoctorId = await _serviceManager.DoctorsService.CreateDoctor(doctor);
 
-            return Ok(doctorToReturn.Id);
+            return CreatedAtAction(nameof(Doctors), new { id = createdDoctorId });
         }
 
         [HttpPut("doctors/{id}")]
@@ -92,7 +66,7 @@ namespace ProfilesManager.Presentation.Controllers
             return NoContent();
         }
 
-        [HttpPatch("doctors/status")]
+        [HttpPatch("doctors/{id}")]
         public async Task<IActionResult> UpdateDoctorStatus(Guid id, [FromQuery] string status)
         {
             await _serviceManager.DoctorsService.UpdateDoctorStatus(id, status);

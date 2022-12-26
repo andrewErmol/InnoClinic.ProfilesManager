@@ -1,4 +1,4 @@
-﻿namespace ProfilesManager.Contracts.RequestEntity
+﻿namespace ProfilesManager.Presentation.RequestEntity
 {
     public class SpecializationForRequest
     {

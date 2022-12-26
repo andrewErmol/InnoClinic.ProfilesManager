@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using ProfilesManager.Contracts.Models;
-using ProfilesManager.Contracts.RequestEntity;
+using ProfilesManager.Presentation.RequestEntity;
 
 namespace ProfilesManager.API
 {

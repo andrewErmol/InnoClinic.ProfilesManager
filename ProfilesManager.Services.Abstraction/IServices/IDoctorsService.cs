@@ -1,17 +1,15 @@
 ﻿using ProfilesManager.Contracts.Models;
+using ProfilesManager.Domain.Parametrs;
 
 namespace ProfilesManager.Services.Abstraction.IServices
 {
     public interface IDoctorsService
     {
-        Task<IEnumerable<Doctor>> GetDoctors();
-        Task<IEnumerable<DoctorForPatient>> GetDoctorsForPatient();
+        Task<IEnumerable<Doctor>> GetDoctors(ParametersForGetDoctors parameters);
+        Task<IEnumerable<DoctorForPatient>> GetDoctorsForPatient(ParametersForGetDoctors parameters);
         Task<Doctor> GetDoctorById(Guid id);
-        Task<IEnumerable<Doctor>> GetDoctorByName(string name);
         Task<DoctorForPatient> GetDoctorByIdForPatient(Guid id);
-        Task<IEnumerable<Doctor>> GetDoctorByOffice(Guid officeId);
-        Task<IEnumerable<Doctor>> GetDoctorBySpecialization(string specializationName);
-        Task<Doctor> CreateDoctor(Doctor doctor);
+        Task<Guid> CreateDoctor(Doctor doctor);
         Task DeleteDoctor(Guid id);
         Task UpdateDoctor(Guid id, Doctor doctor);
         Task UpdateDoctorStatus(Guid id, string doctorStatus);

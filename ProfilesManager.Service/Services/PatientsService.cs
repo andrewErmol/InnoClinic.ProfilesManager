@@ -37,14 +37,14 @@ namespace ProfilesManager.Service.Services
             return _mapper.Map<Patient>(patient);
         }
 
-        public async Task<Patient> CreatePatient(Patient patient)
+        public async Task<Guid> CreatePatient(Patient patient)
         {
             var patientEntity = _mapper.Map<PatientEntity>(patient);
             patientEntity.Id = Guid.NewGuid();
 
             _repositoryManager.PatientsRepository.Create(patientEntity);
 
-            return _mapper.Map<Patient>(patientEntity);
+            return patientEntity.Id;
         }
 
         public async Task UpdatePatient(Guid id, Patient patient)

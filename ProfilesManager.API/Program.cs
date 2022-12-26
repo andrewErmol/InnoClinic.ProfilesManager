@@ -1,4 +1,5 @@
 ﻿using ProfilesManager.API.Extensions;
+using ProfilesManager.Presentation.Controllers;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,7 +12,7 @@ builder.Host.UseSerilog((context, configuration) =>
 // Add services to the container.
 
 builder.Services.AddControllers()
-    .AddApplicationPart(typeof(ProfilesManager.Presentation.AssemblyReference).Assembly);
+    .AddApplicationPart(typeof(MigrationsController).Assembly);
 
 builder.Services.ConfigureCors();
 
