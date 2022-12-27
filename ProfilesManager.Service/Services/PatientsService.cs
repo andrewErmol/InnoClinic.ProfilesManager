@@ -42,7 +42,7 @@ namespace ProfilesManager.Service.Services
             var patientEntity = _mapper.Map<PatientEntity>(patient);
             patientEntity.Id = Guid.NewGuid();
 
-            _repositoryManager.PatientsRepository.Create(patientEntity);
+            await _repositoryManager.PatientsRepository.Create(patientEntity);
 
             return patientEntity.Id;
         }

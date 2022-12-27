@@ -42,7 +42,7 @@ namespace ProfilesManager.Service.Services
             var specializationEntity = _mapper.Map<SpecializationEntity>(specialization);
             specializationEntity.Id = Guid.NewGuid();
 
-            _repositoryManager.SpecializationsRepository.Create(specializationEntity);
+            await _repositoryManager.SpecializationsRepository.Create(specializationEntity);
 
             return specializationEntity.Id;
         }

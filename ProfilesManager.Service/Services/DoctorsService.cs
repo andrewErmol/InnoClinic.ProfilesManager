@@ -74,7 +74,7 @@ namespace ProfilesManager.Service.Services
             var doctorEntity = _mapper.Map<DoctorEntity>(doctor);
             doctorEntity.Id = Guid.NewGuid();
 
-            _repositoryManager.DoctorsRepository.Create(doctorEntity);
+            await _repositoryManager.DoctorsRepository.Create(doctorEntity);
 
             return doctorEntity.Id;
         }
@@ -90,12 +90,14 @@ namespace ProfilesManager.Service.Services
             }
 
             var specialization = await _repositoryManager.SpecializationsRepository.GetById(doctor.SpecializationId);
+
             if (specialization == null)
             {
                 throw new BadRequestException("Entered specialization does not exist");
             }
 
             DoctorStatus status;
+
             if (!Enum.TryParse(doctor.Status, out status))
             {
                 throw new BadRequestException("Entered status does not exist");
@@ -116,6 +118,7 @@ namespace ProfilesManager.Service.Services
             }
 
             DoctorStatus status;
+
             if (!Enum.TryParse(doctorStatus, out status))
             {
                 throw new BadRequestException("Entered status dos not exist");

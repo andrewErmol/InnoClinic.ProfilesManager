@@ -42,7 +42,7 @@ namespace ProfilesManager.Service.Services
             var receptionistEntity = _mapper.Map<ReceptionistEntity>(receptionist);
             receptionistEntity.Id = Guid.NewGuid();
 
-            _repositoryManager.ReceptionistsRepository.Create(receptionistEntity);
+            await _repositoryManager.ReceptionistsRepository.Create(receptionistEntity);
 
             return receptionistEntity.Id;
         }

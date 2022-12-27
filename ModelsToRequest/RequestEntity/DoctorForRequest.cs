@@ -1,6 +1,4 @@
-﻿using ProfilesManager.Domain.Entities;
-
-namespace ProfilesManager.Presentation.RequestEntity
+﻿namespace ProfilesManager.Presentation.RequestEntity
 {
     public class DoctorForRequest
     {

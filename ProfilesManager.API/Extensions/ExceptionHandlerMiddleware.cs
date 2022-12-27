@@ -7,7 +7,7 @@ namespace ProfilesManager.API.Extensions
 {
     public class ExceptionHandlerMiddleware
     {
-        private RequestDelegate _requestDelegate;
+        private readonly RequestDelegate _requestDelegate;
         private IHostEnvironment _env;
 
         public ExceptionHandlerMiddleware(RequestDelegate requestDelegate, IHostEnvironment env)
@@ -24,22 +24,23 @@ namespace ProfilesManager.API.Extensions
             }
             catch (NotFoundException ex)
             {
-                await HandleExceptionAsync(httpContext, ex, HttpStatusCode.NotFound, () => Log.Information(ex, ex.Message));
+                await HandleExceptionAsync(httpContext, ex, HttpStatusCode.NotFound);
+                Log.Information(ex, ex.Message);
             }
             catch (BadRequestException ex)
             {
-                await HandleExceptionAsync(httpContext, ex, HttpStatusCode.BadRequest, () => Log.Information(ex, ex.Message));
+                await HandleExceptionAsync(httpContext, ex, HttpStatusCode.BadRequest);
+                Log.Information(ex, ex.Message);
             }
             catch (Exception ex)
             {
-                await HandleExceptionAsync(httpContext, ex, HttpStatusCode.InternalServerError, () => Log.Error(ex, ex.Message));
+                await HandleExceptionAsync(httpContext, ex, HttpStatusCode.InternalServerError);
+                Log.Error(ex, ex.Message);
             }
         }
 
-        private async Task HandleExceptionAsync(HttpContext context, Exception ex, HttpStatusCode code, Action logAction)
+        private async Task HandleExceptionAsync(HttpContext context, Exception ex, HttpStatusCode code)
         {
-            logAction();
-
             var response = context.Response;
             response.ContentType = "application/json";
             response.StatusCode = (int)code;
