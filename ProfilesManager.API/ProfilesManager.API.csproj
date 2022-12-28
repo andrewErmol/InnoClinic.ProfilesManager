@@ -23,7 +23,7 @@
     <ProjectReference Include="..\ProfilesManager.Persistence\ProfilesManager.Persistence.csproj" />
     <ProjectReference Include="..\ProfilesManager.Presentation\ProfilesManager.Presentation.csproj" />
     <ProjectReference Include="..\ProfilesManager.Services.Abstraction\ProfilesManager.Services.Abstraction.csproj" />
-    <ProjectReference Include="..\ProfilesManager.Service\ProfilesManager.Service.csproj" />
+    <ProjectReference Include="..\ProfilesManager.Service\ProfilesManager.Services.csproj" />
   </ItemGroup>
 
 </Project>

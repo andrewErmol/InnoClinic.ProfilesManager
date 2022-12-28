@@ -20,13 +20,13 @@ namespace ProfilesManager.Presentation.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Receptionists()
+        public async Task<IActionResult> GetReceptionists()
         {
             return Ok(await _serviceManager.ReceptionistsService.GetReceptionists());
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> Receptionist(Guid id)
+        public async Task<IActionResult> GetReceptionist(Guid id)
         {
             var receptionist = await _serviceManager.ReceptionistsService.GetReceptionistById(id);
 
@@ -40,7 +40,7 @@ namespace ProfilesManager.Presentation.Controllers
 
             var createdReceptionistId = await _serviceManager.ReceptionistsService.CreateReceptionist(receptionist);
 
-            return CreatedAtAction(nameof(Receptionists), new { id = createdReceptionistId });
+            return CreatedAtAction(nameof(GetReceptionists), new { id = createdReceptionistId });
         }
 
         [HttpPut("{id}")]

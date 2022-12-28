@@ -20,13 +20,13 @@ namespace ProfilesManager.Presentation.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Specializations()
+        public async Task<IActionResult> GetSpecializations()
         {
             return Ok(await _serviceManager.SpecializationsService.GetSpecializations());
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> Specialization(Guid id)
+        public async Task<IActionResult> GetSpecialization(Guid id)
         {
             var specialization = await _serviceManager.SpecializationsService.GetSpecializationById(id);
 
@@ -40,7 +40,7 @@ namespace ProfilesManager.Presentation.Controllers
 
             var createdSpecializationId = await _serviceManager.SpecializationsService.CreateSpecialization(specialization);
 
-            return CreatedAtAction(nameof(Specializations), new { id = createdSpecializationId });
+            return CreatedAtAction(nameof(GetSpecializations), new { id = createdSpecializationId });
         }
 
         [HttpPut("{id}")]

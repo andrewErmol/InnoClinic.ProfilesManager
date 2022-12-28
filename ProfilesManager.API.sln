@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProfilesManager.Presentatio
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProfilesManager.Contracts", "ProfilesManager.Contracts\ProfilesManager.Contracts.csproj", "{4FDC51A0-AEC2-4976-B3CE-DEB02CA74DE4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProfilesManager.Service", "ProfilesManager.Service\ProfilesManager.Service.csproj", "{F76AE8A3-7773-45D6-AD32-3C72527EC414}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProfilesManager.Services", "ProfilesManager.Service\ProfilesManager.Services.csproj", "{F76AE8A3-7773-45D6-AD32-3C72527EC414}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProfilesManager.Services.Abstraction", "ProfilesManager.Services.Abstraction\ProfilesManager.Services.Abstraction.csproj", "{7760A95B-99BB-4120-980F-A2C362AB9AF2}"
 EndProject
@@ -21,7 +21,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{B5A0B465-F
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{05F1A25A-A4D1-461B-AF30-0A688179D3B0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModelsToRequest", "ModelsToRequest\ModelsToRequest.csproj", "{FCDD63DE-7561-4A40-BE52-5256664B127F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModelsToRequest", "ModelsToRequest\ModelsToRequest.csproj", "{FCDD63DE-7561-4A40-BE52-5256664B127F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

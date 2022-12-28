@@ -20,13 +20,13 @@ namespace ProfilesManager.Presentation.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Patients()
+        public async Task<IActionResult> GetPatients()
         {
             return Ok(await _serviceManager.PatientsService.GetPatients());
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> Patient(Guid id)
+        public async Task<IActionResult> GetPatient(Guid id)
         {
             var patient = await _serviceManager.PatientsService.GetPatientById(id);
 
@@ -40,7 +40,7 @@ namespace ProfilesManager.Presentation.Controllers
 
             var createdPatientId = await _serviceManager.PatientsService.CreatePatient(patient);
 
-            return CreatedAtAction(nameof(Patients), new { id = createdPatientId });
+            return CreatedAtAction(nameof(GetPatients), new { id = createdPatientId });
         }
 
         [HttpPut("{id}")]
