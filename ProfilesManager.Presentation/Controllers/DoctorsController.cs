@@ -40,10 +40,8 @@ namespace ProfilesManager.Presentation.Controllers
             {
                 return Ok(await _serviceManager.DoctorsService.GetDoctorById(id));
             }
-            else
-            {
-                return Ok(await _serviceManager.DoctorsService.GetDoctorByIdForPatient(id));
-            }
+
+            return Ok(await _serviceManager.DoctorsService.GetDoctorByIdForPatient(id));
         }
 
         [HttpPost]
