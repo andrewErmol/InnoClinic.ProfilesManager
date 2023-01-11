@@ -62,6 +62,13 @@ namespace ProfilesManager.Service.Services
             await _repositoryManager.ReceptionistsRepository.Update(receptionistEntity);
         }
 
+        public async Task UpdateReceptionistsAddress(Guid id, string address)
+        {
+            var receptionistsIds = await _repositoryManager.ReceptionistsRepository.GetReceptionistsIdsByOfficeId(id);
+
+            await _repositoryManager.ReceptionistsRepository.UpdateReceptionistsOffice(receptionistsIds, address);
+        }
+
         public async Task DeleteReceptionist(Guid id)
         {
             var receptionistEntity = await _repositoryManager.ReceptionistsRepository.GetById(id);

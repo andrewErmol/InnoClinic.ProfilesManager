@@ -108,6 +108,13 @@ namespace ProfilesManager.Service.Services
             await _repositoryManager.DoctorsRepository.Update(doctorEntity);
         }
 
+        public async Task UpdateDoctorsAddress(Guid id, string address)
+        {
+            var doctorsIds = await _repositoryManager.DoctorsRepository.GetDoctorsIdsByOfficeId(id);
+
+            await _repositoryManager.DoctorsRepository.UpdateDoctorsOffice(doctorsIds, address);
+        }
+
         public async Task UpdateDoctorStatus(Guid id, string doctorStatus)
         {
             var doctorEntity = await _repositoryManager.DoctorsRepository.GetById(id);

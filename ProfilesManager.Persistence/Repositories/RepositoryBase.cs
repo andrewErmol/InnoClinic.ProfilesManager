@@ -47,6 +47,14 @@ namespace ProfilesManager.Persistence.DapperImplementation
             }
         }
 
+        public async Task Update(string query)
+        {
+            using (IDbConnection db = new SqlConnection(connectionString))
+            {
+                await db.ExecuteAsync(query);
+            }
+        }
+
         public async Task Delete(Type entityType, Guid id)
         {
             using (IDbConnection db = new SqlConnection(connectionString))

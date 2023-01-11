@@ -62,6 +62,21 @@ namespace ProfilesManager.Persistence.DapperImplementation
             return doctors;
         }
 
+        public async Task<IEnumerable<Guid>> GetDoctorsIdsByOfficeId(Guid id)
+        {
+            var query = $"SELECT Id FROM {GetTableName(_entityType)} " +
+                $"WHERE Doctors.OfficeId = '{id}'";
+
+            IEnumerable<Guid> doctorsIds;
+
+            using (IDbConnection db = new SqlConnection(connectionString))
+            {
+                doctorsIds = await db.QueryAsync<Guid>(query);
+            }
+
+            return doctorsIds;
+        }
+
         public async Task<DoctorEntity> GetById(Guid id)
         {
             var query = $"SELECT * FROM {GetTableName(_entityType)} " +
@@ -135,6 +150,20 @@ namespace ProfilesManager.Persistence.DapperImplementation
                 "WHERE Id = @Id";
 
             await Update(query, parameters);
+        }
+
+        public async Task UpdateDoctorsOffice(IEnumerable<Guid> id, string address)
+        {
+            string query = "";
+
+            foreach (var doctorsId in id)
+            {
+                query += $"UPDATE {GetTableName(_entityType)} " +
+                $"SET Address = '{address}' " +
+                $"WHERE Id = '{doctorsId}' ";
+            }
+
+            await Update(query);
         }
 
         public async Task UpdateDoctorStatus(Guid id, DoctorStatus doctorStatus)

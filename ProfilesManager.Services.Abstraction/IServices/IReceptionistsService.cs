@@ -9,5 +9,6 @@ namespace ProfilesManager.Services.Abstraction.IServices
         Task<Guid> CreateReceptionist(Receptionist receptionist);
         Task DeleteReceptionist(Guid id);
         Task UpdateReceptionist(Guid id, Receptionist receptionist);
+        Task UpdateReceptionistsAddress(Guid id, string doctorStatus);
     }
 }
