@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="InnoClinic.Domain" Version="1.0.2" />
+    <PackageReference Include="MassTransit" Version="8.0.10" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ProfilesManager.Services.Abstraction\ProfilesManager.Services.Abstraction.csproj" />
+    <ProjectReference Include="..\ProfilesManager.Service\ProfilesManager.Services.csproj" />
+  </ItemGroup>
+
+</Project>
