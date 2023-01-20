@@ -1,14 +1,17 @@
-﻿using FluentValidation;
+﻿using FluentMigrator.Runner;
+using FluentValidation;
 using FluentValidation.AspNetCore;
 using MassTransit;
 using Microsoft.OpenApi.Models;
 using ProfilesManager.Domain.IRepositories;
 using ProfilesManager.Messaging.Consumers;
-using ProfilesManager.Persistence.DapperImplementation;
-using ProfilesManager.Persistence.IDapperImplementation;
+using ProfilesManager.Persistence;
+using ProfilesManager.Persistence.Migrations;
+using ProfilesManager.Persistence.Repositories;
 using ProfilesManager.Presentation.Validators;
 using ProfilesManager.Service.Services;
 using ProfilesManager.Services.Abstraction.IServices;
+using System.Reflection;
 
 namespace ProfilesManager.API.Extensions
 {
@@ -26,18 +29,23 @@ namespace ProfilesManager.API.Extensions
         public static void ConfigureDbManagers(this IServiceCollection services,
             IConfiguration configuration)
         {
-            string connectionStr = configuration.GetConnectionString("sqlConnection");
+            services.AddSingleton<DapperContext>();
+            services.AddSingleton<Database>();
 
-            services.AddScoped<IRepositoryManager, RepositoryManager>(
-                provider => new RepositoryManager(connectionStr));
-            services.AddScoped<ITablesManager, TablesManager>(
-                provider => new TablesManager(connectionStr));
+            services.AddFluentMigratorCore()
+                .ConfigureRunner(c => c.AddSqlServer2016()
+                    .WithGlobalConnectionString(configuration.GetConnectionString("sqlConnection"))
+                    .ScanIn(Assembly.GetAssembly(typeof(DapperContext))).For.Migrations());
+
+            
         }
 
-        public static void ConfigureServices(this IServiceCollection services)
+        public static void ConfigureServices(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddScoped<IServiceManager, ServiceManager>();
-            services.AddScoped<IMigrationsService, MigrationsSevice>();
+            //services.AddScoped<IRepositoryManager, RepositoryManager>();
+            services.AddScoped<IRepositoryManager, RepositoryManager>(
+                provider => new RepositoryManager(configuration.GetConnectionString("sqlConnection")));
             services.AddFluentValidationAutoValidation();
             services.AddValidatorsFromAssemblyContaining<DoctorForRequestValidator>();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());

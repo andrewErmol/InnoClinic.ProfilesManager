@@ -5,7 +5,7 @@ using ProfilesManager.Domain.Parametrs;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace ProfilesManager.Persistence.DapperImplementation
+namespace ProfilesManager.Persistence.Repositories
 {
     public class DoctorsRepository : RepositoryBase<DoctorEntity>, IDoctorsRepository
     {

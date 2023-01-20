@@ -2,7 +2,7 @@
 using ProfilesManager.Domain.Entities;
 using ProfilesManager.Domain.IRepositories;
 
-namespace ProfilesManager.Persistence.DapperImplementation
+namespace ProfilesManager.Persistence.Repositories
 {
     public class PatientsRepository : RepositoryBase<PatientEntity>, IPatientsRepository
     {

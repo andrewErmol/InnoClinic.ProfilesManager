@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace ProfilesManager.Persistence.DapperImplementation
+namespace ProfilesManager.Persistence.Repositories
 {
     public class RepositoryBase<T> : IRepositoryBase<T> where T : class
     {

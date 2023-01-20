@@ -1,6 +1,6 @@
 ﻿using ProfilesManager.Domain.IRepositories;
 
-namespace ProfilesManager.Persistence.DapperImplementation
+namespace ProfilesManager.Persistence.Repositories
 {
     public class RepositoryManager : IRepositoryManager
     {

@@ -4,7 +4,7 @@ using ProfilesManager.Domain.IRepositories;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace ProfilesManager.Persistence.DapperImplementation
+namespace ProfilesManager.Persistence.Repositories
 {
     public class ReceptionistsRepository : RepositoryBase<ReceptionistEntity>, IReceptionistsRepository
     {

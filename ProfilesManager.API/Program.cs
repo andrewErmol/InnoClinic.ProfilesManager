@@ -2,6 +2,7 @@
 using ProfilesManager.API.Extensions;
 using ProfilesManager.Presentation.Controllers;
 using Serilog;
+using FluentMigrator.Runner;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseSerilog((context, configuration) =>
@@ -13,7 +14,7 @@ builder.Host.UseSerilog((context, configuration) =>
 // Add services to the container.
 
 builder.Services.AddControllers()
-    .AddApplicationPart(typeof(MigrationsController).Assembly);
+    .AddApplicationPart(typeof(DoctorsController).Assembly);
 
 builder.Services.ConfigureCors();
 
@@ -35,7 +36,7 @@ builder.Services.AddAuthentication();
 
 builder.Services.ConfigureSwagger();
 
-builder.Services.ConfigureServices();
+builder.Services.ConfigureServices(builder.Configuration);
 builder.Services.ConfigureMassTransit(builder.Configuration);
 
 var app = builder.Build();
@@ -49,14 +50,14 @@ if (app.Environment.IsDevelopment())
 
 app.UseMiddleware(typeof(ExceptionHandlerMiddleware));
 
-app.UseHttpsRedirection();
-
 app.UseStaticFiles();
 
 app.UseCors("CorsPolicy");
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.MigrateDatabase();
 
 app.MapControllers();
 
