@@ -13,12 +13,13 @@ namespace ProfilesManager.Service.Services
         private IPatientsService _patientsService;
         private IReceptionistsService _receptionistsService;
         private ISpecializationsService _specializationsService;
+        private IPublishService _publishService;
 
-        public ServiceManager(IRepositoryManager repositoryManager, IMapper mapper)
+        public ServiceManager(IRepositoryManager repositoryManager, IMapper mapper, IPublishService publishService)
         {
             _repositoryManager = repositoryManager;
             _mapper = mapper;
-
+            _publishService = publishService;
         }
 
         public IDoctorsService DoctorsService
@@ -26,7 +27,7 @@ namespace ProfilesManager.Service.Services
             get
             {
                 if (_doctorsService == null)
-                    _doctorsService= new DoctorsService(_repositoryManager, _mapper);
+                    _doctorsService= new DoctorsService(_repositoryManager, _mapper, _publishService);
                 return _doctorsService;
             }
         }
@@ -36,7 +37,7 @@ namespace ProfilesManager.Service.Services
             get
             {
                 if (_patientsService == null)
-                    _patientsService = new PatientsService(_repositoryManager, _mapper);
+                    _patientsService = new PatientsService(_repositoryManager, _mapper, _publishService);
                 return _patientsService;
             }
         }

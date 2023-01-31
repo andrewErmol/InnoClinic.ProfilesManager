@@ -11,6 +11,7 @@ using ProfilesManager.Persistence.Repositories;
 using ProfilesManager.Presentation.Validators;
 using ProfilesManager.Service.Services;
 using ProfilesManager.Services.Abstraction.IServices;
+using ProfilesManager.Services.Services;
 using System.Reflection;
 
 namespace ProfilesManager.API.Extensions
@@ -43,9 +44,9 @@ namespace ProfilesManager.API.Extensions
         public static void ConfigureServices(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddScoped<IServiceManager, ServiceManager>();
-            //services.AddScoped<IRepositoryManager, RepositoryManager>();
             services.AddScoped<IRepositoryManager, RepositoryManager>(
                 provider => new RepositoryManager(configuration.GetConnectionString("sqlConnection")));
+            services.AddScoped<IPublishService, PublishService>();
             services.AddFluentValidationAutoValidation();
             services.AddValidatorsFromAssemblyContaining<DoctorForRequestValidator>();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());

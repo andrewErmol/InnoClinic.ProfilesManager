@@ -24,8 +24,8 @@ namespace ProfilesManager.Messaging.Consumers
         {
             var message = context.Message;
             
-            _serviceManager.DoctorsService.UpdateDoctorsAddress(message.Id, message.Address);
-            _serviceManager.ReceptionistsService.UpdateReceptionistsAddress(message.Id, message.Address);
+            await _serviceManager.DoctorsService.UpdateDoctorsAddress(message.Id, message.Address);
+            await _serviceManager.ReceptionistsService.UpdateReceptionistsAddress(message.Id, message.Address);
         }
     }
 }

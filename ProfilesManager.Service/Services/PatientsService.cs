@@ -11,11 +11,13 @@ namespace ProfilesManager.Service.Services
     {
         private readonly IRepositoryManager _repositoryManager;
         private readonly IMapper _mapper;
+        private readonly IPublishService _publishService;
 
-        public PatientsService(IRepositoryManager repositoryManager, IMapper mapper)
+        public PatientsService(IRepositoryManager repositoryManager, IMapper mapper, IPublishService publishService)
         {
             _repositoryManager = repositoryManager;
             _mapper = mapper;
+            _publishService = publishService;
         }
 
         public async Task<IEnumerable<Patient>> GetPatients()
@@ -60,6 +62,8 @@ namespace ProfilesManager.Service.Services
             _mapper.Map(patient, patientEntity);
 
             await _repositoryManager.PatientsRepository.Update(patientEntity);
+
+            await _publishService.PublishPatientUpdatedMessage(patient);
         }
 
         public async Task DeletePatient(Guid id)

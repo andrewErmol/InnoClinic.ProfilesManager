@@ -22,8 +22,8 @@ namespace ProfilesManager.Messaging.Consumers
         {
             var message = context.Message;
 
-            _serviceManager.DoctorsService.UpdateDoctorsAddress(message.Id, "undefined");
-            _serviceManager.ReceptionistsService.UpdateReceptionistsAddress(message.Id, "undefined");
+            await _serviceManager.DoctorsService.UpdateDoctorsAddress(message.Id, "undefined");
+            await _serviceManager.ReceptionistsService.UpdateReceptionistsAddress(message.Id, "undefined");
         }
     }
 }

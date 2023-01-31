@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="InnoClinic.Domain" Version="1.0.2" />
+    <PackageReference Include="InnoClinic.Domain" Version="1.0.5" />
     <PackageReference Include="MassTransit" Version="8.0.10" />
   </ItemGroup>
 

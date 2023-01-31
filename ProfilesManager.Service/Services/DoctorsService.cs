@@ -12,11 +12,13 @@ namespace ProfilesManager.Service.Services
     {
         private readonly IRepositoryManager _repositoryManager;
         private readonly IMapper _mapper;
+        private readonly IPublishService _publishService;
 
-        public DoctorsService(IRepositoryManager repositoryManager, IMapper mapper)
+        public DoctorsService(IRepositoryManager repositoryManager, IMapper mapper, IPublishService publishService)
         {
             _repositoryManager = repositoryManager;
             _mapper = mapper;
+            _publishService = publishService;
         }
 
         public async Task<IEnumerable<Doctor>> GetDoctors(ParametersForGetDoctors parameters)
@@ -106,6 +108,8 @@ namespace ProfilesManager.Service.Services
             _mapper.Map(doctor, doctorEntity);
 
             await _repositoryManager.DoctorsRepository.Update(doctorEntity);
+
+            await _publishService.PublishDoctorUpdatedMessage(doctor);
         }
 
         public async Task UpdateDoctorsAddress(Guid id, string address)
